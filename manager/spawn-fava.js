@@ -51,4 +51,14 @@ async function spawnFava({ id }) {
   return getUrl(id, port);
 }
 
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, killing all fava instances');
+  Object.keys(runningFavaInstances).forEach((id) => {
+    const { fava } = runningFavaInstances[id];
+    fava.kill();
+  });
+  console.log('done, exiting');
+  process.exit(0);
+});
+
 module.exports = spawnFava;
