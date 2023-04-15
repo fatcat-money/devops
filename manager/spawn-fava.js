@@ -1,15 +1,21 @@
 const path = require('path');
 const { spawn } = require('child_process');
 const host = '65.109.81.69';
-const port = 5001;
+
+// new port for each url is needed
+let port = 3001;
 
 const runningFavaInstances = {};
 
+function getUrl() {
+  return `http://${host}:${port}/${id}`;
+}
+
 async function spawnFava({ id }) {
-  const url = `http://${host}:${port}/${id}`;
   if (runningFavaInstances[id]) {
-    return url;
+    return getUrl();
   }
+  port++;
   // fava example.beancount --port 5001 --prefix /open
   const fileName = path.join(__dirname, '..', `${id}.beancount`);
   const fava = spawn('fava', [
@@ -42,7 +48,7 @@ async function spawnFava({ id }) {
   // to kill fava
   // fava.kill();
 
-  return url;
+  return getUrl();
 }
 
 module.exports = spawnFava;
