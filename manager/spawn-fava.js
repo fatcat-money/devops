@@ -7,13 +7,13 @@ let port = 3001;
 
 const runningFavaInstances = {};
 
-function getUrl(id) {
+function getUrl(id, port) {
   return `http://${host}:${port}/${id}`;
 }
 
 async function spawnFava({ id }) {
   if (runningFavaInstances[id]) {
-    return getUrl(id);
+    return getUrl(id, runningFavaInstances[id].port);
   }
   port++;
   // fava example.beancount --port 5001 --prefix /open
@@ -43,12 +43,12 @@ async function spawnFava({ id }) {
     console.log(`Child process exited for ${id} with code ${code}`);
   });
 
-  runningFavaInstances[id] = fava;
+  runningFavaInstances[id] = { fava, port };
 
   // to kill fava
   // fava.kill();
 
-  return getUrl(id);
+  return getUrl(id, port);
 }
 
 module.exports = spawnFava;
