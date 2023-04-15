@@ -12,7 +12,15 @@ async function spawnFava({ id }) {
   }
   // fava example.beancount --port 5001 --prefix /open
   const fileName = path.join(__dirname, '..', `${id}.beancount`);
-  const fava = spawn('fava', [fileName, '--port', port, '--prefix', `/${id}`]);
+  const fava = spawn('fava', [
+    fileName,
+    '--port',
+    port,
+    '--host',
+    '0.0.0.0',
+    '--prefix',
+    `/${id}`,
+  ]);
   fava.stdout.on('data', function (data) {
     console.log(data.toString());
   });
