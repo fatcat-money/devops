@@ -1,19 +1,22 @@
 const express = require('express');
 const taxMaster = require('./tax-master');
 const spawnFava = require('./spawn-fava');
+const cors = require('cors');
+
 const PORT = 3000;
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.post('/tax', async (req, res) => {
   try {
     console.time('taxMaster');
     console.log('req.body', req.body);
 
-    const { id } = req.body;
+    const { id, wallets, currency } = req.body;
 
-    await taxMaster({ id });
+    await taxMaster({ id, wallets, currency });
     const url = await spawnFava({ id });
 
     console.timeEnd('taxMaster');

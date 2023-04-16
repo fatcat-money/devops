@@ -1,10 +1,13 @@
 const path = require('path');
 const { spawn } = require('child_process');
 
-async function taxMaster({ id }) {
+async function taxMaster({ id, wallets, currency }) {
   return new Promise((resolve, reject) => {
     const pyScriptPath = path.join(__dirname, '..', 'exec.py');
-    const py = spawn('python3', [pyScriptPath, JSON.stringify({ id })]);
+    const py = spawn('python3', [
+      pyScriptPath,
+      JSON.stringify({ id, wallets, currency }),
+    ]);
     py.stdout.on('data', function (data) {
       console.log(data.toString());
       resolve();
