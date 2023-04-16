@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const taxMaster = require('./tax-master');
 const spawnFava = require('./spawn-fava');
@@ -17,6 +18,7 @@ app.post('/tax', async (req, res) => {
     const { id, wallets, currency } = req.body;
 
     await taxMaster({ id, wallets, currency });
+    console.log('calling spawn fava========================================');
     const url = await spawnFava({ id });
 
     console.timeEnd('taxMaster');
