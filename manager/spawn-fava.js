@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 const host = '65.109.81.69';
 
 // new port for each url is needed
-let port = 3001;
+let port = 3002;
 
 const runningFavaInstances = {};
 
