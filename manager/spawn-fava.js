@@ -23,8 +23,8 @@ async function spawnFava({ id }) {
     '--port',
     port,
     '--host',
-    // '0.0.0.0',
-    'localhost',
+    '0.0.0.0',
+    // 'localhost',
     '--prefix',
     `/${id}`,
   ]);
